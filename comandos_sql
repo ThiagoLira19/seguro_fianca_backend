@@ -1,0 +1,265 @@
+DROP TABLE Tabela_Seguros
+
+CREATE TABLE Tabela_Seguros (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+	uuid TEXT NOT NULL UNIQUE,
+	Numero_Cotacao INTEGER UNIQUE,
+    Data_Hora_Cotacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Codigo_Mediador TEXT,
+    Nome_Mediador TEXT,
+    Email_Mediador TEXT,
+    Telefone_Mediador TEXT,
+    Nome_Locatario TEXT,
+    CPF_Locatario TEXT,
+    Email_Locatario TEXT,
+    Telefone_Locatario TEXT,
+    CEP_Locatario TEXT,
+    Logradouro_Locatario TEXT,
+    Numero_Logradouro_Locatario TEXT,
+    Complemento_Logradouro_Locatario TEXT,
+    Cidade_Locatario TEXT,
+    Estado_Locatario TEXT,
+    Score REAL,
+    Pendencia_Financeira REAL,
+    Nome_Locador TEXT,
+    CPF_Locador TEXT,
+    Email_Locador TEXT,
+    Telefone_Locador TEXT,
+    CEP_Locador TEXT,
+    Logradouro_Locador TEXT,
+    Numero_Logradouro_Locador TEXT,
+    Complemento_Logradouro_Locador TEXT,
+    Cidade_Locador TEXT,
+    Estado_Locador TEXT,
+    Tipo_Seguro TEXT,
+    Apolice_Anterior INTEGER,
+    tipo_locacao TEXT,
+    CEP_Risco TEXT,
+    Logradouro_Risco TEXT,
+    Numero_Logradouro_Risco INTEGER,
+    Complemento_Risco TEXT,
+    Cidade_Risco TEXT,
+    Estado_Risco TEXT,
+    Data_Inicio_Vigencia DATE,
+    Data_Fim_Vigencia DATE,
+    Periodo INTEGER,
+    IS_Aluguel REAL,
+    IS_IPTU REAL,
+    IS_Condominio REAL,
+    IS_Agua REAL,
+    IS_Energia_Eletrica REAL,
+    IS_Gas REAL,
+    IS_Danos_Imovel REAL,
+    IS_Pintura_Interna REAL,
+    IS_Pintura_Externa REAL,
+    IS_Multa_Recisoria REAL,
+	Numero_Apolice INTEGER,
+    Data_Hora_Emissao DATETIME,
+    Pacote TEXT,
+    Tipo_Pagamento TEXT,
+    Quantidade_Parcelas INTEGER,
+    Juros_Pagamento TEXT,
+    Taxa_Juros_Pagamento REAL,
+    Premio_Total REAL,
+    Comissao REAL,
+    Desconto_Cap REAL,
+    IOF REAL,
+    LMG_Aluguel REAL,
+    LMG_IPTU REAL,
+    LMG_Condominio REAL,
+    LMG_Agua REAL,
+    LMG_Energia_Eletrica REAL,
+    LMG_Gas REAL,
+    LMG_Danos_Imovel REAL,
+    LMG_Pintura_Interna REAL,
+    LMG_Pintura_Externa REAL,
+    LMG_Multa_Recisoria REAL,
+    Premio_Aluguel REAL,
+    Premio_IPTU REAL,
+    Premio_Condominio REAL,
+    Premio_Agua REAL,
+    Premio_Energia_Eletrica REAL,
+    Premio_Gas REAL,
+    Premio_Danos_Imovel REAL,
+    Premio_Pintura_Interna REAL,
+    Premio_Pintura_Externa REAL,
+    Premio_Multa_Recisoria REAL,
+    Premio_Total_Liquido REAL,
+	Status TEXT NOT NULL DEFAULT 'Aguardando Processamento da Cotação'
+);
+
+
+INSERT INTO Tabela_Seguros (
+    Codigo_Mediador,
+    Nome_Mediador,
+    Email_Mediador,
+    Telefone_Mediador,
+    Nome_Locatario,
+    CPF_Locatario,
+    Email_Locatario,
+    Telefone_Locatario,
+    CEP_Locatario,
+    Logradouro_Locatario,
+    Numero_Logradouro,
+    Complemento_Logradouro_Locatario,
+    Cidade_Locatario,
+    Estado_Locatario,
+    Score,
+    Pendencia_Financeira,
+    Nome_Locador,
+    CPF_Locador,
+    Email_Locador,
+    Telefone_Locador,
+    CEP_Locador,
+    Logradouro_Locador,
+    Numero_Logradouro_Locador,
+    Complemento_Logradouro_Locador,
+    Cidade_Locador,
+    Estado_Locador,
+    Tipo_Seguro,
+    Apolice_Anterior,
+    Tipo_Locacao,
+    CEP_Risco,
+    Logradouro_Risco,
+    Numero_Logradouro_Risco,
+    Complemento_Risco,
+    Cidade_Risco,
+    Estado_Risco,
+    Data_Inicio_Vigencia,
+    Data_Fim_Vigencia,
+    Periodo,
+    IS_Aluguel,
+    IS_IPTU,
+    IS_Condominio,
+    IS_Agua,
+    IS_Energia_Eletrica,
+    IS_Gas,
+    IS_Danos_Imovel,
+    IS_Pintura_Interna,
+    IS_Pintura_Externa,
+    IS_Multa_Recisoria,
+    LMG_Aluguel,
+    LMG_IPTU,
+    LMG_Condominio,
+    LMG_Agua,
+    LMG_Energia_Eletrica,
+    LMG_Gas,
+    LMG_Danos_Imovel,
+    LMG_Pintura_Interna,
+    LMG_Pintura_Externa,
+    LMG_Multa_Recisoria,
+    Premio_Aluguel,
+    Premio_IPTU,
+    Premio_Condominio,
+    Premio_Agua,
+    Premio_Energia_Eletrica,
+    Premio_Gas,
+    Premio_Danos_Imovel,
+    Premio_Pintura_Interna,
+    Premio_Pintura_Externa,
+    Premio_Multa_Recisoria,
+    Premio_Total_Liquido,
+    Numero_Cotacao,
+    Data_Hora_Cotacao,
+    Numero_Apolice,
+    Data_Hora_Emissao,
+    Pacote,
+    Tipo_Pagamento,
+    Quantidade_Parcelas,
+    Juros_Pagamento,
+    Taxa_Juros_Pagamento,
+    Premio_Total,
+    Comissao,
+    Desconto_Cap,
+    IOF,
+    Status
+) VALUES (
+    '12345', -- Codigo_Mediador
+    'João Silva', -- Nome_Mediador
+    'joao.silva@email.com', -- Email_Mediador
+    '(11) 98765-4321', -- Telefone_Mediador
+    'Maria Oliveira', -- Nome_Locatario
+    '123.456.789-00', -- CPF_Locatario
+    'maria.oliveira@email.com', -- Email_Locatario
+    '(11) 91234-5678', -- Telefone_Locatario
+    '12345-678', -- CEP_Locatario
+    'Rua das Flores', -- Logradouro_Locatario
+    '123', -- Numero_Logradouro
+    'Apto 101', -- Complemento_Logradouro_Locatario
+    'São Paulo', -- Cidade_Locatario
+    'SP', -- Estado_Locatario
+    750.5, -- Score
+    1200.75, -- Pendencia_Financeira
+    'Carlos Souza', -- Nome_Locador
+    '987.654.321-00', -- CPF_Locador
+    'carlos.souza@email.com', -- Email_Locador
+    '(11) 92345-6789', -- Telefone_Locador
+    '54321-098', -- CEP_Locador
+    'Avenida Central', -- Logradouro_Locador
+    '456', -- Numero_Logradouro_Locador
+    'Casa 2', -- Complemento_Logradouro_Locador
+    'Rio de Janeiro', -- Cidade_Locador
+    'RJ', -- Estado_Locador
+    'Novos Negócios', -- Tipo_Seguro
+    NULL, -- Apolice_Anterior
+    'Residencial', -- Tipo_Locacao
+    '98765-432', -- CEP_Risco
+    'Rua do Risco', -- Logradouro_Risco
+    789, -- Numero_Logradouro_Risco
+    'Bloco B', -- Complemento_Risco
+    'Curitiba', -- Cidade_Risco
+    'PR', -- Estado_Risco
+    '2026-06-01', -- Data_Inicio_Vigencia
+    '2027-06-01', -- Data_Fim_Vigencia
+    12, -- Periodo
+    1500.00, -- IS_Aluguel
+    200.00, -- IS_IPTU
+    300.00, -- IS_Condominio
+    100.00, -- IS_Agua
+    150.00, -- IS_Energia_Eletrica
+    50.00, -- IS_Gas
+    500.00, -- IS_Danos_Imovel
+    250.00, -- IS_Pintura_Interna
+    300.00, -- IS_Pintura_Externa
+    1000.00, -- IS_Multa_Recisoria
+    1800.00, -- LMG_Aluguel
+    250.00, -- LMG_IPTU
+    350.00, -- LMG_Condominio
+    120.00, -- LMG_Agua
+    180.00, -- LMG_Energia_Eletrica
+    60.00, -- LMG_Gas
+    600.00, -- LMG_Danos_Imovel
+    300.00, -- LMG_Pintura_Interna
+    350.00, -- LMG_Pintura_Externa
+    1200.00, -- LMG_Multa_Recisoria
+    100.00, -- Premio_Aluguel
+    20.00, -- Premio_IPTU
+    30.00, -- Premio_Condominio
+    10.00, -- Premio_Agua
+    15.00, -- Premio_Energia_Eletrica
+    5.00, -- Premio_Gas
+    50.00, -- Premio_Danos_Imovel
+    25.00, -- Premio_Pintura_Interna
+    30.00, -- Premio_Pintura_Externa
+    100.00, -- Premio_Multa_Recisoria
+    385.00, -- Premio_Total_Liquido
+    1001, -- Numero_Cotacao
+    '2026-05-30 14:30:00', -- Data_Hora_Cotacao
+    2001, -- Numero_Apolice
+    '2026-05-30 15:00:00', -- Data_Hora_Emissao
+    'Pacote Completo', -- Pacote
+    'Cartão de Crédito', -- Tipo_Pagamento
+    12, -- Quantidade_Parcelas
+    'Sim', -- Juros_Pagamento
+    1.5, -- Taxa_Juros_Pagamento
+    400.00, -- Premio_Total
+    50.00, -- Comissao
+    10.00, -- Desconto_Cap
+    5.00, -- IOF
+    'Aguardando Processamento da Cotação' -- Status
+);
+
+
+select * from Tabela_Seguros
+
+delete from Tabela_Seguros
