@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, request, Response, make_response
+from flask import Flask, json, jsonify, render_template, request, Response, make_response
 from flask_cors import CORS
 import pandas as pd
 import xml.etree.ElementTree as ET
@@ -20,9 +20,16 @@ def home():
     return jsonify({'status_api': 'OK'})
 
 @app.route('/nova_cotacao', methods=['POST'])
-def new_quote():
+def nova_cotacao():
     # Recebe os dados do JSON enviado no corpo da requisição
     data = request.get_json()
+
+    # # Define o caminho e o nome do arquivo onde o JSON será salvo
+    # file_path = 'nova_cotacao.json'
+
+    #     # Salva o JSON em um arquivo
+    # with open(file_path, 'w', encoding='utf-8') as json_file:
+    #     json.dump(data, json_file, ensure_ascii=False, indent=4)
 
     # Dicionário esperado (valores obrigatórios)
     required_fields = [
@@ -57,8 +64,8 @@ def new_quote():
         "Telefone_Mediador": data.get("Telefone_Mediador", ""),
         "Score": data.get("Score", 0),
         "Pendencia_Financeira": data.get("Pendencia_Financeira", 0),
-        "Apolice_Anterior": data.get("Apolice_Anterior", None),
-        "Numero_Cotacao": data.get("Numero_Cotacao", None),
+        "Apolice_Anterior": data.get("Apolice_Anterior", "NULL"),
+        "Numero_Cotacao": data.get("Numero_Cotacao", "NULL"),
         "Status": data.get("Status", "Aguardando processamento da cotacao")
     })
 
@@ -67,46 +74,38 @@ def new_quote():
     # Retorna uma resposta
     return result
 
-@app.route('/meus_pedidos_cotacoes', methods=['POST'])
-def get_my_requested_quotes():
+@app.route('/list_by_cod_mediador_and_status', methods=['POST'])
+def get_cotacoes_por_mediador_e_status():
     # Recebe os dados do JSON enviado no corpo da requisição
     data = request.get_json()
 
     cod_mediador = data.get("cod_mediador", "")
 
-    result = tabela_seguros.listar_cotacoes("")
+    status = data.get("status", "")
 
-    return result
+    result = tabela_seguros.listar_cotacoes(cod_mediador="", status=status)
 
+    return jsonify(result)
 
-@app.route('/download_xml', methods=['POST'])
-def download_xml():
+@app.route('/download_json', methods=['POST'])
+def download_json():
     # Recebe os dados do JSON enviado no corpo da requisição
     data = request.get_json()
 
+    # Obtém o número da cotação enviado no corpo da requisição
     numero_cotacao = data.get("cotacao", "")
 
+    # Busca os dados da cotação na tabela de seguros
     result = tabela_seguros.buscar_cotacao(numero_cotacao)
 
-    # Converter JSON para XML
-    root = ET.Element("root")  # Elemento raiz
+    # Verifica se há resultados
+    if not result:
+        # Retorna uma mensagem de erro caso não encontre a cotação
+        return jsonify({"error": f"Cotação {numero_cotacao} não encontrada."}), 404
 
-    for item in result:
-        rateIn = ET.SubElement(root, "rateIn")  # Cada item será um <rateIn>
-        for key, value in item.items():
-            # Adiciona cada chave como um subelemento do pedido
-            sub_element = ET.SubElement(rateIn, key)
-            sub_element.set("value", str(value) if value is not None else "")  # Adicionar o atributo "value"
+    # Retorna os dados da cotação como JSON
+    return jsonify(result)
 
-    # Converte o XML para string
-    xml_content = ET.tostring(root, encoding="utf-8", method="xml").decode("utf-8")
-
-    # Cria uma resposta com o conteúdo XML
-    response = make_response(xml_content)
-    response.headers['Content-Type'] = 'application/xml'  # Define o tipo de conteúdo como XML
-    #response.headers['Content-Disposition'] = 'attachment; filename=meus_pedidos.xml'  # Define o nome do arquivo para download
-
-    return xml_content
 
 if __name__ == '__main__':
     app.run(debug=True)
