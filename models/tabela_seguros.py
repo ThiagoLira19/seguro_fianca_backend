@@ -13,19 +13,19 @@ class TabelaSegurosModel:
         """
         # Gerar um UUID
         data['unique_id'] = str(uuid.uuid4())
-        data['IS_Aluguel'] = data['IS_Aluguel'].replace(".", "").replace(",", ".")
-        data['IS_IPTU'] = data['IS_IPTU'].replace(".", "").replace(",", ".")
-        data['IS_Condominio'] = data['IS_Condominio'].replace(".", "").replace(",", ".")
-        data['IS_Agua'] = data['IS_Agua'].replace(".", "").replace(",", ".")
-        data['IS_Energia_Eletrica'] = data['IS_Aluguel'].replace(".", "").replace(",", ".")
-        data['IS_Gas'] = data['IS_Energia_Eletrica'].replace(".", "").replace(",", ".")
-        data['IS_Danos_Imovel'] = data['IS_Danos_Imovel'].replace(".", "").replace(",", ".")
-        data['IS_Pintura_Interna'] = data['IS_Pintura_Interna'].replace(".", "").replace(",", ".")
-        data['IS_Pintura_Externa'] = data['IS_Pintura_Externa'].replace(".", "").replace(",", ".")
-        data['IS_Multa_Recisoria'] = data['IS_Multa_Recisoria'].replace(".", "").replace(",", ".")
+        data['IS_Aluguel'] = float(data['IS_Aluguel'])
+        data['IS_IPTU'] = float(data['IS_IPTU'])
+        data['IS_Condominio'] = float(data['IS_Condominio'])
+        data['IS_Agua'] = float(data['IS_Agua'])
+        data['IS_Energia_Eletrica'] = float(data['IS_Energia_Eletrica'])
+        data['IS_Gas'] = float(data['IS_Gas'])
+        data['IS_Danos_Imovel'] = float(data['IS_Danos_Imovel'])
+        data['IS_Pintura_Interna'] = float(data['IS_Pintura_Interna'])
+        data['IS_Pintura_Externa'] = float(data['IS_Pintura_Externa'])
+        data['IS_Multa_Recisoria'] = float(data['IS_Multa_Recisoria'])
 
         query = f"""
-            INSERT INTO tb_fianca (
+        INSERT INTO tb_fianca (
             uuid, Codigo_Mediador, Nome_Mediador, Email_Mediador, Telefone_Mediador,
             Nome_Locatario, CPF_Locatario, Email_Locatario, Telefone_Locatario,
             CEP_Locatario, Logradouro_Locatario, Numero_Logradouro_Locatario,
@@ -37,7 +37,10 @@ class TabelaSegurosModel:
             Numero_Logradouro_Risco, Complemento_Risco, Cidade_Risco, Estado_Risco,
             Data_Inicio_Vigencia, Data_Fim_Vigencia, Periodo, IS_Aluguel, IS_IPTU,
             IS_Condominio, IS_Agua, IS_Energia_Eletrica, IS_Gas, IS_Danos_Imovel,
-            IS_Pintura_Interna, IS_Pintura_Externa, IS_Multa_Recisoria, Numero_Cotacao, Status
+            IS_Pintura_Interna, IS_Pintura_Externa, IS_Multa_Recisoria, premio_aluguel, 
+            premio_iptu, premio_condominio, premio_agua, premio_energia_eletrica,
+            premio_gas, premio_danos_imovel, premio_pintura_interna, premio_pintura_externa, 
+            premio_multa_recisoria, premio_total_liquido, Numero_Cotacao, Status
         ) VALUES (
             '{data["unique_id"]}', '{data["Codigo_Mediador"]}', '{data["Nome_Mediador"]}', '{data["Email_Mediador"]}', '{data["Telefone_Mediador"]}',
             '{data["Nome_Locatario"]}', '{data["CPF_Locatario"]}', '{data["Email_Locatario"]}', '{data["Telefone_Locatario"]}',
@@ -50,10 +53,14 @@ class TabelaSegurosModel:
             '{data["Numero_Logradouro_Risco"]}', '{data["Complemento_Risco"]}', '{data["Cidade_Risco"]}', '{data["Estado_Risco"]}',
             '{data["Data_Inicio_Vigencia"]}', '{data["Data_Fim_Vigencia"]}', '{data["Periodo"]}', '{data["IS_Aluguel"]}', '{data["IS_IPTU"]}',
             '{data["IS_Condominio"]}', '{data["IS_Agua"]}', '{data["IS_Energia_Eletrica"]}', '{data["IS_Gas"]}', '{data["IS_Danos_Imovel"]}',
-            '{data["IS_Pintura_Interna"]}', '{data["IS_Pintura_Externa"]}', '{data["IS_Multa_Recisoria"]}', {data["Numero_Cotacao"]}, '{data["Status"]}'
+            '{data["IS_Pintura_Interna"]}', '{data["IS_Pintura_Externa"]}', '{data["IS_Multa_Recisoria"]}', 
+            '{data["premio_aluguel"]}', '{data["premio_iptu"]}', '{data["premio_condominio"]}', '{data["premio_agua"]}', 
+            '{data["premio_energia_eletrica"]}', '{data["premio_gas"]}', '{data["premio_danos_imovel"]}', 
+            '{data["premio_pintura_interna"]}', '{data["premio_pintura_externa"]}', '{data["premio_multa_recisoria"]}', 
+            '{data["premio_total_liquido"]}', {data["Numero_Cotacao"]}, '{data["Status"]}'
         ) RETURNING id;
-            """
-
+        """
+        
         return self.db.execute_write(query)
     
 
@@ -75,8 +82,6 @@ class TabelaSegurosModel:
 
         query = f"SELECT * FROM tb_fianca WHERE Codigo_Mediador LIKE '{cod_mediador}' AND status LIKE '{status}';"
 
-        print(query)
-
         # Executa a consulta com o parâmetro cod_mediador
         resultados = self.db.execute_read(query)
 
@@ -91,8 +96,6 @@ class TabelaSegurosModel:
         :return: Lista de cotações.
         """
         query = f"SELECT * FROM tb_fianca WHERE Numero_Cotacao = {numero_cotacao};"
-
-        print(query)
 
         # Executa a consulta com o parâmetro cod_mediador
         resultados = self.db.execute_read(query)
