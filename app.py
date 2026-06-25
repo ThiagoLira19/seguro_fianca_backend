@@ -3,6 +3,9 @@ from flask_cors import CORS
 from flasgger import Swagger
 from models.tabela_seguros import TabelaSegurosModel
 from services.radar_service import RadarService
+import subprocess
+import hmac
+import hashlib
 
 app = Flask(__name__)
 
