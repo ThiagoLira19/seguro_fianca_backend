@@ -83,7 +83,7 @@ def home():
     """
 
     return jsonify({
-        "status": "API está funcionando v1.0"
+        "status": "API está funcionando v1.1"
     }), 200
 
 @app.route('/nova_cotacao', methods=['POST'])
