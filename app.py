@@ -61,7 +61,7 @@ db_path = "database/dados_fianca.db"
 # Instanciar o modelo
 tabela_seguros = TabelaSegurosModel(db_path)
 
-@app.route('/', methods=['GET'])
+@app.route('/health', methods=['GET'])
 def home():
     """
     Retorna o status da API
@@ -74,11 +74,14 @@ def home():
         schema:
           type: object
           properties:
-            resultado:
+            status:
               type: string
               description: Status da API
     """
-    return jsonify({'status_api': 'OK'})
+
+    return jsonify({
+        "status": "API está funcionando v1.0"
+    }), 200
 
 @app.route('/nova_cotacao', methods=['POST'])
 def nova_cotacao():
@@ -529,6 +532,33 @@ def consultar_cotacao(numero_cotacao):
         # Retorna uma mensagem de erro em caso de exceção
         return jsonify({"success": False, "message": f"Erro ao consultar a cotação: {str(e)}"}), 500
 
+@app.route("/deploy")
+def deploy():
+
+    resultado = subprocess.run(
+        """
+        cd /root/app/seguro_fianca_backend &&
+        git pull &&
+        source venv/bin/activate &&
+        pip install -r requirements.txt &&
+        systemctl restart seguro-fianca
+        """,
+        shell=True,
+        executable="/bin/bash",
+        capture_output=True,
+        text=True
+    )
+
+    if resultado.returncode != 0:
+        return jsonify({
+            "erro": resultado.stderr
+        }), 500
+
+
+    return jsonify({
+        "message": "Deploy concluído",
+        "saida": resultado.stdout
+    }), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
