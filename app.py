@@ -549,15 +549,10 @@ def deploy():
         text=True
     )
 
-    if resultado.returncode != 0:
-        return jsonify({
-            "erro": resultado.stderr
-        }), 500
-
-
     return jsonify({
-        "message": "Deploy concluído",
-        "saida": resultado.stdout
+        "codigo": resultado.returncode,
+        "saida": resultado.stdout,
+        "erro": resultado.stderr
     }), 200
 
 if __name__ == '__main__':
