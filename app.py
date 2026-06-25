@@ -552,12 +552,16 @@ def deploy():
         text=True
     )
 
+    if resultado.returncode != 0:
+        return jsonify({
+            "status": "erro",
+            "erro": resultado.stderr
+        }), 500
+
     return jsonify({
-        "codigo": resultado.returncode,
-        "saida": resultado.stdout,
-        "erro": resultado.stderr,
+        "status": "ok",
         "message": "Deploy iniciado"
-    }), 200
+    })
 
 if __name__ == '__main__':
     app.run(debug=True)
