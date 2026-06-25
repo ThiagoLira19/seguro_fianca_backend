@@ -544,7 +544,7 @@ def deploy():
         git pull &&
         source venv/bin/activate &&
         pip install -r requirements.txt &&
-        systemctl restart seguro-fianca
+        nohup systemctl restart seguro-fianca >/dev/null 2>&1 &
         """,
         shell=True,
         executable="/bin/bash",
@@ -555,7 +555,8 @@ def deploy():
     return jsonify({
         "codigo": resultado.returncode,
         "saida": resultado.stdout,
-        "erro": resultado.stderr
+        "erro": resultado.stderr,
+        "message": "Deploy iniciado"
     }), 200
 
 if __name__ == '__main__':
