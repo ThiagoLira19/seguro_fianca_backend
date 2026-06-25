@@ -8,14 +8,6 @@ class DatabaseConnection:
         Cria e retorna uma conexão com o banco de dados.
         """
         try:
-            #conn = sqlite3.connect(self.db_path)
-            # conn = psycopg2.connect(
-            #     host="data-science-ia.com.br",
-            #     port=5432,
-            #     database="seguro_fianca",
-            #     user="admin",
-            #     password="151651asc2026asasdfds@"
-            # )
             conn = psycopg2.connect(
                 host="localhost",
                 port=5432,
