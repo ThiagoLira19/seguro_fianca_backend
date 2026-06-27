@@ -10,6 +10,8 @@ import hashlib
 
 app = Flask(__name__)
 
+app.json.ensure_ascii = False
+
 # Configuração personalizada do Swagger
 swagger_config = {
     "swagger": "2.0",
