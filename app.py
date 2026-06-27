@@ -3,6 +3,7 @@ from flask_cors import CORS
 from flasgger import Swagger
 from models.tabela_seguros import TabelaSegurosModel
 from services.radar_service import RadarService
+from database.connection import connect
 import subprocess
 import hmac
 import hashlib
@@ -85,6 +86,14 @@ def home():
     return jsonify({
         "status": "API está funcionando v1.2"
     }), 200
+
+@app.route('/test_db', methods=['GET'])
+def test_db():
+    conn = self.connect()
+    if conn:
+        return jsonify({
+            "status": "Banco de dados funcionando"
+        }), 200
 
 @app.route('/nova_cotacao', methods=['POST'])
 def nova_cotacao():
