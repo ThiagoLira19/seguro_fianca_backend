@@ -3,7 +3,7 @@ from flask_cors import CORS
 from flasgger import Swagger
 from models.tabela_seguros import TabelaSegurosModel
 from services.radar_service import RadarService
-from database.connection import connect
+from database.connection import DatabaseConnection
 import subprocess
 import hmac
 import hashlib
@@ -89,11 +89,19 @@ def home():
 
 @app.route('/test_db', methods=['GET'])
 def test_db():
-    conn = self.connect()
+    
+    db = DatabaseConnection()
+    conn = db.connect()
     if conn:
+        conn.close()
         return jsonify({
             "status": "Banco de dados funcionando"
         }), 200
+    
+    return jsonify({
+            "status": "erro",
+            "message": "Não foi possível conectar ao banco."
+        }), 500
 
 @app.route('/nova_cotacao', methods=['POST'])
 def nova_cotacao():
