@@ -86,7 +86,7 @@ def home():
     """
 
     return jsonify({
-        "status": "API está funcionando v1.2"
+        "status": "API está funcionando v1.3"
     }), 200
 
 @app.route('/test_db', methods=['GET'])
